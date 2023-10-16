@@ -1,26 +1,19 @@
-import { Injectable } from '@angular/core';
-import { Cv } from '../model/cv';
-import { Subject, distinctUntilChanged, Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { API } from '../../../config/api.config';
+import { Injectable } from "@angular/core";
+import { Cv } from "../model/cv";
+import { Subject, distinctUntilChanged, Observable } from "rxjs";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { API } from "../../../config/api.config";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CvService {
   private cvs: Cv[] = [];
-  private selectCvSubject = new Subject<Cv>();
 
-  /**
-   *
-   * Si vous voulez avoir le cv sélectionné inscrivez vous ici
-   *
-   */
-  selectCv$ = this.selectCvSubject.asObservable().pipe(distinctUntilChanged());
   constructor(private http: HttpClient) {
     this.cvs = [
-      new Cv(1, 'aymen', 'sellaouti', 'teacher', 'as.jpg', '1234', 40),
-      new Cv(2, 'skander', 'sellaouti', 'enfant', '       ', '1234', 4),
+      new Cv(1, "aymen", "sellaouti", "teacher", "as.jpg", "1234", 40),
+      new Cv(2, "skander", "sellaouti", "enfant", "       ", "1234", 4),
     ];
   }
 
@@ -99,16 +92,5 @@ export class CvService {
       return true;
     }
     return false;
-  }
-
-  /**
-   *
-   * Emet le cv sélectionné à tous les observateurs
-   *
-   * @param cv: Cv
-   *
-   */
-  selectCv(cv: Cv) {
-    this.selectCvSubject.next(cv);
   }
 }
