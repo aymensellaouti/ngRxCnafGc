@@ -8,7 +8,7 @@ import {
   takeWhile,
 } from "rxjs";
 import { ProductService } from "../services/product.service";
-
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 export interface ApiResponse {
   limit: number;
   products: Product[];
@@ -53,6 +53,7 @@ export class ProductsComponent {
       concatMap((setting) => this.productService.getProducts(setting)),
       map((apiResponse) => apiResponse.products),
       takeWhile((products) => !!products.length),
+      takeUntilDestroyed(),
       scan((oldProducts, newProducts) => [...oldProducts, ...newProducts])
     );
   }

@@ -7,6 +7,12 @@
       {{ nbClick }}
     </div>
     <app-list [cvs]="cvs$ | async"></app-list>
+    <hr />
+    <h2>Les Juniors</h2>
+    <app-list [cvs]="juniors$ | async"></app-list>
+    <hr />
+    <h2>Les Seniors</h2>
+    <app-list [cvs]="seniors$ | async"></app-list>
   </div>
   <div class="col">
     <app-cv-card></app-cv-card>
