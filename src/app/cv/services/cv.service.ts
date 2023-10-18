@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Cv } from "../model/cv";
 import { Subject, distinctUntilChanged, Observable } from "rxjs";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { API } from "../../../config/api.config";
 
 @Injectable({
@@ -92,5 +92,13 @@ export class CvService {
       return true;
     }
     return false;
+  }
+
+  getCvsByName(name: string): Observable<Cv[]> {
+    const params = new HttpParams().set(
+      "filter",
+      `{"where":{"name":{"like":"%${name}%"}}}`
+    );
+    return this.http.get<Cv[]>(API.cv, { params });
   }
 }
