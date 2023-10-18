@@ -13,6 +13,7 @@ import { TestPipePureComponent } from "./components/test-pipe-pure/test-pipe-pur
 import { TestObservableComponent } from "./rxjs/test-observable/test-observable.component";
 import { FromOfComponent } from "./rxjs/from-of/from-of.component";
 import { TestSliderComponent } from "./rxjs/test-slider/test-slider.component";
+import { AutocompleteComponent } from "./cv/autocomplete/autocomplete.component";
 
 const routes: Route[] = [
   { path: "", redirectTo: "cv", pathMatch: "full" },
@@ -32,6 +33,7 @@ const routes: Route[] = [
   { path: "testObservable", component: TestObservableComponent },
   { path: "fromOf", component: FromOfComponent },
   { path: "slider", component: TestSliderComponent },
+  { path: "auto", component: AutocompleteComponent },
   { path: "**", component: NF404Component },
 ];
 

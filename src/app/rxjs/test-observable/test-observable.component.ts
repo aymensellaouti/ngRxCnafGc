@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
-import { Observable, map } from "rxjs";
+import { Observable, filter, map, take } from "rxjs";
 
 @Component({
   selector: "app-test-observable",
@@ -28,8 +28,12 @@ export class TestObservableComponent {
     /* 5 4 3 2 1 */
     this.observable$
       .pipe(
-        map((valeur) => valeur * 3)
+        map((valeur) => valeur * 3),
         /* 15 12 9 6 3 */
+        filter((valeur) => valeur % 2 == 0),
+        /* 12 6 */
+        take(1)
+        /* 12 */
       )
       .subscribe({
         next: (x) => {

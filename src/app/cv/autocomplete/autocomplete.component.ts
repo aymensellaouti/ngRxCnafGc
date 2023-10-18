@@ -5,8 +5,11 @@ import {
   Subscription,
   debounceTime,
   from,
+  mergeMap,
   of,
   switchMap,
+  tap,
+  throttleTime,
 } from "rxjs";
 import { Cv } from "../model/cv";
 import { CvService } from "../services/cv.service";
@@ -24,5 +27,13 @@ export class AutocompleteComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup({ name: new FormControl() });
     const nameInput = this.form.controls["name"];
+    nameInput.valueChanges
+      .pipe(
+        debounceTime(500),
+        tap((valeur) => console.log(valeur)),
+        switchMap((chaine) => this.cvService.getCvsByName(chaine)),
+        tap((valeur) => console.log(valeur))
+      )
+      .subscribe();
   }
 }
