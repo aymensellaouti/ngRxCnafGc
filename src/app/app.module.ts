@@ -26,6 +26,11 @@ import { TodoComponent } from "./todo/todo/todo.component";
 import { AutocompleteComponent } from "./cv/autocomplete/autocomplete.component";
 import { ProductsComponent } from "./products/products.component";
 import { TestPipePureComponent } from "./components/test-pipe-pure/test-pipe-pure.component";
+import { TestObservableComponent } from './rxjs/test-observable/test-observable.component';
+import { CalculFPipe } from './pipes/calcul-f.pipe';
+import { FromOfComponent } from './rxjs/from-of/from-of.component';
+import { SliderComponent } from './rxjs/slider/slider.component';
+import { TestSliderComponent } from './rxjs/test-slider/test-slider.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +50,11 @@ import { TestPipePureComponent } from "./components/test-pipe-pure/test-pipe-pur
     LoginComponent,
     ProductsComponent,
     TestPipePureComponent,
+    TestObservableComponent,
+    CalculFPipe,
+    FromOfComponent,
+    SliderComponent,
+    TestSliderComponent,
   ],
   imports: [
     BrowserModule,

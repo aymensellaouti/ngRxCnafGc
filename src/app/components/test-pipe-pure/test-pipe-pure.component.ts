@@ -10,7 +10,7 @@ export class TestPipePureComponent {
   elements: number[] = [];
 
   constructor() {
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 30; i++) {
       this.elements[i] = this.getRandomValBetween(20, 30);
     }
   }
