@@ -21,20 +21,22 @@ export class CvComponent {
   juniors$: Observable<Cv[]>;
   seniors$: Observable<Cv[]>;
   date = new Date();
-  nbClick = 0;
-  constructor(private toastr: ToastrService, private cvService: CvService) {
-    this.cvService.selectCv$.subscribe(() => this.nbClick++);
+  /* nbClick = 0; */
+  constructor(
+    /* private toastr: ToastrService */ private cvService: CvService
+  ) {
+    /* this.cvService.selectCv$.subscribe(() => this.nbClick++); */
     this.cvs$ = this.cvService.getCvs().pipe(
-      share(),
+      /* share(), */
       retry({
         delay: 1500,
         count: 4,
       }),
       /* Opérateur qui permet d'intercepter les erreurs */
       catchError((e) => {
-        this.toastr.error(`
+        /* this.toastr.error(`
           Attention!! Les données sont fictives, problème avec le serveur.
-          Veuillez contacter l'admin.`);
+          Veuillez contacter l'admin.`); */
         return of(this.cvService.getFakeCvs());
       })
     );
