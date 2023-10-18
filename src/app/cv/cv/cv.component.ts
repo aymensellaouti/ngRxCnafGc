@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { Cv } from "../model/cv";
 import { ToastrService } from "ngx-toastr";
 import { CvService } from "../services/cv.service";
-import { Observable, catchError, of, retry } from "rxjs";
+import { Observable, catchError, distinctUntilChanged, of, retry } from "rxjs";
 @Component({
   selector: "app-cv",
   templateUrl: "./cv.component.html",
@@ -10,10 +10,10 @@ import { Observable, catchError, of, retry } from "rxjs";
 })
 export class CvComponent {
   cvs$: Observable<Cv[]>;
-  selectedCv: Cv | null = null;
   date = new Date();
-
+  nbClick = 0;
   constructor(private toastr: ToastrService, private cvService: CvService) {
+    this.cvService.selectCv$.subscribe(() => this.nbClick++);
     this.cvs$ = this.cvService.getCvs().pipe(
       retry({
         delay: 1500,
@@ -39,9 +39,5 @@ export class CvComponent {
           Veuillez contacter l'admin.`);
       },
     }); */
-  }
-
-  getSelectedCv(cv: Cv) {
-    this.selectedCv = cv;
   }
 }

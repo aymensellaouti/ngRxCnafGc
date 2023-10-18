@@ -9,7 +9,10 @@ import { API } from "../../../config/api.config";
 })
 export class CvService {
   private cvs: Cv[] = [];
-
+  /* Subject privé encapsulé en cas de besoin de dire qu'on a selectionné un subject, utiliser selectCv */
+  private selectCvSubject = new Subject<Cv>();
+  /* Observable en cas de besoin d'abonnement */
+  selectCv$ = this.selectCvSubject.asObservable().pipe(distinctUntilChanged());
   constructor(private http: HttpClient) {
     this.cvs = [
       new Cv(1, "aymen", "sellaouti", "teacher", "as.jpg", "1234", 40),
@@ -100,5 +103,9 @@ export class CvService {
       `{"where":{"name":{"like":"%${name}%"}}}`
     );
     return this.http.get<Cv[]>(API.cv, { params });
+  }
+
+  selectCv(cv: Cv) {
+    this.selectCvSubject.next(cv);
   }
 }
