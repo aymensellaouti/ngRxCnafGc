@@ -1,4 +1,13 @@
 import { Component } from "@angular/core";
+import {
+  BehaviorSubject,
+  Observable,
+  concatMap,
+  map,
+  scan,
+  takeWhile,
+} from "rxjs";
+import { ProductService } from "../services/product.service";
 
 export interface ApiResponse {
   limit: number;
@@ -31,4 +40,25 @@ export interface Settings {
   templateUrl: "./products.component.html",
   styleUrls: ["./products.component.css"],
 })
-export class ProductsComponent {}
+export class ProductsComponent {
+  setting = { limit: 12, skip: 0 };
+  products$!: Observable<Product[]>;
+  settings$: BehaviorSubject<Settings> = new BehaviorSubject(this.setting);
+  constructor(private productService: ProductService) {
+    /* Concat  */
+    /* il faut un type d'observable qui me déclenche à la demande un nouveau flux */
+    /* Au click sur le bouton on va déclencher une nouvelle donnée dans le flux */
+    /* Pour arreter le flux avec takeWhill */
+    this.products$ = this.settings$.pipe(
+      concatMap((setting) => this.productService.getProducts(setting)),
+      map((apiResponse) => apiResponse.products),
+      takeWhile((products) => !!products.length),
+      scan((oldProducts, newProducts) => [...oldProducts, ...newProducts])
+    );
+  }
+
+  more() {
+    this.setting.skip += this.setting.limit;
+    this.settings$.next(this.setting);
+  }
+}
